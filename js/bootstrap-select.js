@@ -897,7 +897,8 @@
 
     init: function () {
       var that = this,
-          id = this.$element.attr('id');
+          id = this.$element.attr('id'),
+          form = this.$element[0].form;
 
       selectId++;
       this.selectId = 'bs-select-' + selectId;
@@ -995,6 +996,14 @@
           that.$button.on('blur' + EVENT_KEY, function () {
             that.$element.trigger('focus').trigger('blur');
             that.$button.off('blur' + EVENT_KEY);
+          });
+        });
+      }
+
+      if (form) {
+        $(form).on('reset' + EVENT_KEY, function () {
+          requestAnimationFrame(function () {
+            that.render();
           });
         });
       }
